@@ -87,24 +87,24 @@ def check_and_insert(
 
 def t(entry, parent_tg, parent_mg):
     el = SubElement(parent_tg, "t")
-    if entry.WORD_CLASS_1:
-        el.set("pos", entry.WORD_CLASS_1)
+    if entry.WORD_CLAss:
+        el.set("pos", entry.WORD_CLAss)
     if entry.SCIENTIFIC_NAME:
         el.set("sci", entry.SCIENTIFIC_NAME)
     el.text = entry.TRANSLATION
-    for n in range(1, 8):
+    for n in range(1, 4):
         ex = getattr(entry, f"SAAMI_EX_{n}")
         if ex is not None:
             spanish_ex = getattr(entry, f"SPANISH_EX_{n}")
             check_and_insert(ex, "", "x", parent_tg, "xg", [spanish_ex, "xt"])
-        if n <= 6:
+        if n <= 6: # Unnecessary here, but needed if the number of examples is increased, as in spa-sme
             syn = getattr(entry, f"TRANSLATION_SYNONYM{n}")
             check_and_insert(syn, "", "syn", parent_mg, "syng")
 
 
 def dict2xml_bytestring(d):
     root = Element("r")
-    for (lemma, pos, gender), entries in d.items():
+    for (lemma, pos), entries in d.items():
         # all_synonyms_are_the_same = all(
         #     entry.LEMMA_SYNONYM == entries[0].LEMMA_SYNONYM
         #     for entry in entries
@@ -116,8 +116,6 @@ def dict2xml_bytestring(d):
         l = SubElement(lg, "l")
         if pos is not None:
             l.set("pos", pos)
-        if gender is not None:
-            l.set("gen", gender)
         if entries[0].LEMMA_SYNONYM is not None:
             l.set("syn", entries[0].LEMMA_SYNONYM)
         l.text = lemma
@@ -129,7 +127,7 @@ def dict2xml_bytestring(d):
             tg.set('{http://www.w3.org/XML/1998/namespace}lang', "spa")
             check_and_insert(entry.RESTRICTION, tg, "re")
             check_and_insert(entry.EXPLANATION, tg, "expl")
-            check_and_insert(entry.INFLECTION, lg, "lsub")
+            check_and_insert(entry.INFLECTION, lg, "lsub") # Think this is the wrong tag
             t(entry, tg, mg)
 
     return tostring(root, encoding="utf-8", pretty_print=True)
@@ -172,7 +170,7 @@ def main(args):
             for col in row
         ))
 
-        lemmas[(e.WORD, e.WORD_CLASS, e.GENDER)].append(e)
+        lemmas[(e.WORD, e.WORD_CLAš)].append(e) # This is not perfect, it merges homographs like beassi and vuovdi. Need input from Ángel
 
     
     xml_bytestring = dict2xml_bytestring(lemmas)
