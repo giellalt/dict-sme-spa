@@ -99,19 +99,12 @@ def t(entry, parent_tg, parent_mg):
 def dict2xml_bytestring(d):
     root = Element("r")
     for (lemma, pos), entries in d.items():
-        # all_synonyms_are_the_same = all(
-        #     entry.LEMMA_SYNONYM == entries[0].LEMMA_SYNONYM
-        #     for entry in entries
-        # )
-        # assert all_synonyms_are_the_same
 
         e = SubElement(root, "e")
         lg = SubElement(e, "lg")
         l = SubElement(lg, "l")
         if pos is not None:
             l.set("pos", pos)
-        if entries[0].LEMMA_SYNONYM is not None:
-            l.set("syn", entries[0].LEMMA_SYNONYM)
         l.text = lemma
 
         for entry in entries:
@@ -121,7 +114,7 @@ def dict2xml_bytestring(d):
             tg.set('{http://www.w3.org/XML/1998/namespace}lang', "spa")
             check_and_insert(entry.RESTRICTION, tg, "re")
             check_and_insert(entry.EXPLANATION, tg, "expl")
-            check_and_insert(entry.INFLECTION, lg, "lsub") # Think this is the wrong tag
+            #check_and_insert(entry.INFLECTION, lg, "lsub") # Think this is the wrong tag
             t(entry, tg, mg)
 
     return tostring(root, encoding="utf-8", pretty_print=True)
