@@ -81,8 +81,8 @@ def check_and_insert(
 
 def t(entry, parent_tg, parent_mg):
     el = SubElement(parent_tg, "t")
-    if entry.WORD_CLAss:
-        el.set("pos", entry.WORD_CLAss)
+    if entry.WORD_CLASS_SPANISH:
+        el.set("pos", entry.WORD_CLASS_SPANISH)
     if entry.SCIENTIFIC_NAME:
         el.set("sci", entry.SCIENTIFIC_NAME)
     el.text = entry.TRANSLATION
@@ -164,7 +164,7 @@ def main(args):
             for col in row
         ))
 
-        lemmas[(e.WORD, e.WORD_CLAš)].append(e) # This is not perfect, it merges homographs like beassi and vuovdi. Need input from Ángel
+        lemmas[(e.WORD, e.WORD_CLASS_SAAMI)].append(e) # This is not perfect, it merges homographs like beassi and vuovdi. Need input from Ángel
 
     
     xml_bytestring = dict2xml_bytestring(lemmas)
