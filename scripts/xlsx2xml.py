@@ -22,38 +22,32 @@ except ImportError:
 
 #  expected_column_names = (
 #      "WORD",  # lemma, <l.text>
-#      "GENDER",  # attribute on <l>
-#      "LEMMA_SYNONYM",  # l.syn
-#      "INFLECTION",  # mg / <l_sci>
-#      "WORD_CLASS",  # pos, attribute "pos" on <l>
-#      "BASIC_WORD",  # unused
+#      None,
+#      None,
+#      "INFLECTION", # inflection class, unsure about use yet
+#      "WORD_CLASS_SAAMI",  # pos, attribute "pos" on <l>
+#      "BASIC_FORM",  # unused
 #      "TRANSLATION_NUMBER",
 #      "RESTRICTION",  # tg -> <re> if not none
 #      "SCIENTIFIC_NAME",  # mg -> <l_sci> if not none
-#      "SAAMI",  # t value  if not none, else:
-#      "SAAMI_TRANSLATION_CASE_OR_FORM",  # .. this is t value
-#      "WORD_CLASS_1",  # t.pos if not none
+#      "TRANSLATION",  # t value  if not none, else:
+#      None,
+#      "WORD_CLASS_SPANISH",  # t.pos if not none
 #      "EXPLANATION",   # tg -> <expl> if not none
-#      "TRANS_SYNON1",
-#      "TRANS_SYNON2",
-#      "TRANS_SYNON3",
-#      "TRANS_SYNON4",
-#      "TRANS_SYNON5",
-#      "TRANS_SYNON6",
-#      "SPANISH_EX_1",
+#      "TRANSLATION_SYNONYM1",
+#      "TRANSLATION_SYNONYM2",
+#      "TRANSLATION_SYNONYM3",
+#      "TRANSLATION_SYNONYM4",
+#      "TRANSLATION_SYNONYM5",
+#      "TRANSLATION_SYNONYM6",
 #      "SAAMI_EX_1",
-#      "SPANISH_EX_2",
+#      "SPANISH_EX_1",
 #      "SAAMI_EX_2",
-#      "SPANISH_EX_3",
+#      "SPANISH_EX_2",
 #      "SAAMI_EX_3",
-#      "SPANISH_EX_4",
+#      "SPANISH_EX_3",
 #      "SAAMI_EX_4",
-#      "SPANISH_EX_5",
-#      "SAAMI_EX_5",
-#      "SPANISH_EX_6",
-#      "SAAMI_EX_6",
-#      "SPANISH_EX_7",
-#      "SAAMI_EX_7",
+#      "SPANISH_EX_4",
 #  )
 
 
