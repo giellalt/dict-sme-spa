@@ -22,7 +22,7 @@ except ImportError:
 
 #  expected_column_names = (
 #      "WORD",  # lemma, <l.text>
-#      None,
+#      "G3_WORDS", # inflection types: G3 and NomAg
 #      None,
 #      "INFLECTION", # inflection class, unsure about use yet
 #      "WORD_CLASS_SAAMI",  # pos, attribute "pos" on <l>
@@ -85,6 +85,8 @@ def t(entry, parent_tg, parent_mg):
         el.set("pos", entry.WORD_CLASS_SPANISH)
     if entry.SCIENTIFIC_NAME:
         el.set("sci", entry.SCIENTIFIC_NAME)
+    if entry.G3_WORDS:
+        el.set("type", entry.G3_WORDS)
     el.text = entry.TRANSLATION
     for n in range(1, 4):
         ex = getattr(entry, f"SAAMI_EX_{n}")
