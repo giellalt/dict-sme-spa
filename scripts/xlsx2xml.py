@@ -22,8 +22,8 @@ except ImportError:
 
 #  expected_column_names = (
 #      "WORD",  # lemma, <l.text>
-#      "G3_WORDS", # inflection types: G3 and NomAg
 #      None,
+#      "G3_NomAg", # inflection types: G3 and NomAg
 #      "INFLECTION", # inflection class, unsure about use yet
 #      "WORD_CLASS_SAAMI",  # pos, attribute "pos" on <l>
 #      "BASIC_FORM",  # unused
@@ -85,8 +85,6 @@ def t(entry, parent_tg, parent_mg):
         el.set("pos", entry.WORD_CLASS_SPANISH)
     if entry.SCIENTIFIC_NAME:
         el.set("sci", entry.SCIENTIFIC_NAME)
-    if entry.G3_WORDS:
-        el.set("type", entry.G3_WORDS)
     el.text = entry.TRANSLATION
     for n in range(1, 4):
         ex = getattr(entry, f"SAAMI_EX_{n}")
@@ -100,13 +98,15 @@ def t(entry, parent_tg, parent_mg):
 
 def dict2xml_bytestring(d):
     root = Element("r")
-    for (lemma, pos), entries in d.items():
+    for (lemma, pos, type), entries in d.items():
 
         e = SubElement(root, "e")
         lg = SubElement(e, "lg")
         l = SubElement(lg, "l")
         if pos is not None:
             l.set("pos", pos)
+        if type is not None:
+            l.set("type", type)
         l.text = lemma
 
         for entry in entries:
@@ -127,7 +127,7 @@ def read_column_names(columns):
     fields = []
     for col in columns:
         if col[0].value is not None:
-            orig_field = field = col[0].value.replace(" ", "_")
+            orig_field = field = col[0].value.replace(" ", "_").replace("/", "_")
         else:
             orig_field = field = "Empty_field"
         n = field_counts[orig_field]
@@ -162,7 +162,7 @@ def main(args):
             for col in row
         ))
 
-        lemmas[(e.WORD, e.WORD_CLASS_SAAMI)].append(e) # This is not perfect, it merges homographs like beassi and vuovdi. Need input from Ángel
+        lemmas[(e.WORD, e.WORD_CLASS_SAAMI, e.G3_NomAg)].append(e)
 
     
     xml_bytestring = dict2xml_bytestring(lemmas)
