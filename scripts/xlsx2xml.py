@@ -50,6 +50,142 @@ except ImportError:
 #      "SPANISH_EX_4",
 #  )
 
+def insert_custom_paradigms(lg, l):
+    if l.text == "gii" and l.get("pos") == "Pron, Interr":
+        insert_pronoun_paradigm(lg, "Interr", "Sg", "gii", "gean", "geasa", "geas", "geainna", "geanin")
+    elif l.text == "gii" and l.get("pos") == "Pron, Rel":
+        insert_pronoun_paradigm(lg, "Rel", "Sg", "gii", "gean", "geasa", "geas", "geainna", "geanin")
+    elif l.text == "mii" and l.get("pos") == "Pron, Interr":
+        insert_mii_paradigm(lg, "Interr")
+    elif l.text == "mii" and l.get("pos") == "Pron, Rel":
+        insert_mii_paradigm(lg, "Rel")
+    elif l.text == "goabbá" and l.get("pos") == "Pron, A, Interr":
+        insert_pronoun_paradigm(lg, "Interr", "Sg", "goabbá", "goappá", "goabbái", "goappás", "goappáin", "goabbán")
+    elif l.text == "goabbá" and l.get("pos") == "Pron, Rel":
+        insert_pronoun_paradigm(lg, "Rel", "Sg", "goabbá", "goappá", "goabbái", "goappás", "goappáin", "goabbán")
+    elif l.text == "goappašat" and l.get("pos") == "Pron, Indef":
+        insert_pronoun_paradigm(lg, "Interr", "Pl", "goappašat", "goappašiid", "goappašiide", "goappašiin", "goappašiiguin", "goappašin")
+    elif l.text == "guhte" and l.get("pos") == "Pron, A, Interr":
+        insert_pronoun_paradigm(lg, "Interr", "Sg", "guhte", "guđe", "guhtii", "guđes", "guđiin", "guhten")
+    elif l.text == "guhte" and l.get("pos") == "Pron, Rel":
+        insert_pronoun_paradigm(lg, "Rel", "Sg", "guhte", "guđe", "guhtii", "guđes", "guđiin", "guhten")
+    elif l.text == "guktot" and l.get("pos") == "Pron, Indef":
+        insert_pronoun_paradigm(lg, "Indef", "Pl", "guktot", "guktuid", "guktuide", "guktuin", "guktuin", None)
+    elif l.text == "juoga" and l.get("pos") == "Pron, Indef":
+        insert_juoga_paradigm(lg, "Indef")
+    elif l.text == "ieš" and l.get("pos") == "Pron":
+        insert_ieš_paradigm(lg, "Refl")
+    elif l.text == "mun" and l.get("pos") == "Pron":
+        insert_pronoun_paradigm(lg, "Pers", "Sg1", "mun", "mu", "munnje", "mus", "muinna", "munin")
+    elif l.text == "don" and l.get("pos") == "Pron":
+        insert_pronoun_paradigm(lg, "Pers", "Sg2", "don", "du", "dutnje", "dus", "duinna", "dunin")
+    elif l.text == "son" and l.get("pos") == "Pron":
+        insert_pronoun_paradigm(lg, "Pers", "Sg3", "son", "su", "sutnje", "sus", "suinna", "sunin")
+    elif l.text == "moai" and l.get("pos") == "Pron":
+        insert_pronoun_paradigm(lg, "Pers", "Du1", "moai", "munno", "munnuide", "munnos", "munnuin", "munnon")
+    elif l.text == "doai" and l.get("pos") == "Pron":
+        insert_pronoun_paradigm(lg, "Pers", "Du2", "doai", "dudno", "dudnuide", "dudnos", "dudnuin", "dudnon")
+    elif l.text == "soai" and l.get("pos") == "Pron":
+        insert_pronoun_paradigm(lg, "Pers", "Du3", "soai", "sudno", "sudnuide", "sudnos", "sudnuin", "sudnon")
+    elif l.text == "mii" and l.get("pos") == "Pron":
+        insert_pronoun_paradigm(lg, "Pers", "Pl1", "mii", "min", "midjiide", "mis", "minguin", "minin")
+    elif l.text == "dii" and l.get("pos") == "Pron":
+        insert_pronoun_paradigm(lg, "Pers", "Pl2", "dii", "din", "didjiide", "dis", "dinguin", "dinin")
+    elif l.text == "sii" and l.get("pos") == "Pron":
+        insert_pronoun_paradigm(lg, "Pers", "Pl3", "sii", "sin", "sidjiide", "sis", "singuin", "sinin")
+
+
+def insert_pronoun_paradigm(parent, type, num, nom, accgen, ill, loc, com, ess):
+    mp = SubElement(parent, "mini_paradigm")
+    a_nom = SubElement(mp, "analysis", ms=f"Pron_{type}_{num}_Nom")
+    wf_nom = SubElement(a_nom, "wordform")
+    wf_nom.text = nom
+    a_accgen = SubElement(mp, "analysis", ms=f"Pron_{type}_{num}_Acc/Gen")
+    wf_accgen = SubElement(a_accgen, "wordform")
+    wf_accgen.text = accgen
+    a_ill = SubElement(mp, "analysis", ms=f"Pron_{type}_{num}_Ill")
+    wf_ill = SubElement(a_ill, "wordform")
+    wf_ill.text = ill
+    a_loc = SubElement(mp, "analysis", ms=f"Pron_{type}_{num}_Loc")
+    wf_loc = SubElement(a_loc, "wordform")
+    wf_loc.text = loc
+    a_com = SubElement(mp, "analysis", ms=f"Pron_{type}_{num}_Com")
+    wf_com = SubElement(a_com, "wordform")
+    wf_com.text = com
+    if ess is not None:
+        a_ess = SubElement(mp, "analysis", ms=f"Pron_{type}_Ess")
+        wf_ess = SubElement(a_ess, "wordform")
+        wf_ess.text = ess
+
+def insert_mii_paradigm(parent, type):
+    mp = SubElement(parent, "mini_paradigm")
+    a_gen = SubElement(mp, "analysis", ms=f"Pron_{type}_Sg_Gen")
+    wf_gen = SubElement(a_gen, "wordform")
+    wf_gen.text = "man"
+    a_acc = SubElement(mp, "analysis", ms=f"Pron_{type}_Sg_Acc")
+    wf_acc = SubElement(a_acc, "wordform")
+    wf_acc.text = "maid"
+    wf_acc2 = SubElement(a_acc, "wordform")
+    wf_acc2.text = "man"
+    a_ill = SubElement(mp, "analysis", ms=f"Pron_{type}_Sg_Ill")
+    wf_ill = SubElement(a_ill, "wordform")
+    wf_ill.text = "masa"
+    a_loc = SubElement(mp, "analysis", ms=f"Pron_{type}_Sg_Loc")
+    wf_loc = SubElement(a_loc, "wordform")
+    wf_loc.text = "mas"
+    a_com = SubElement(mp, "analysis", ms=f"Pron_{type}_Sg_Com")
+    wf_com = SubElement(a_com, "wordform")
+    wf_com.text = "mainna"
+    a_ess = SubElement(mp, "analysis", ms=f"Pron_{type}_Ess")
+    wf_ess = SubElement(a_ess, "wordform")
+    wf_ess.text = "manin"
+
+def insert_ieš_paradigm(parent, type):
+    mp = SubElement(parent, "mini_paradigm")
+    a_du = SubElement(mp, "analysis", ms=f"Pron_{type}_Du_Nom")
+    wf_du = SubElement(a_du, "wordform")
+    wf_du.text = "ieža"
+    a_pl = SubElement(mp, "analysis", ms=f"Pron_{type}_Pl_Nom")
+    wf_pl = SubElement(a_pl, "wordform")
+    wf_pl.text = "ieža"
+
+def insert_juoga_paradigm(parent, type):
+    mp = SubElement(parent, "mini_paradigm")
+    a_nom = SubElement(mp, "analysis", ms=f"Pron_{type}_Sg_Nom")
+    wf_nom = SubElement(a_nom, "wordform")
+    wf_nom.text = "juoga"
+    wf_nom2 = SubElement(a_nom, "wordform")
+    wf_nom2.text = "juoiddá"
+    wf_nom3 = SubElement(a_nom, "wordform")
+    wf_nom3.text = "juoidá"
+    a_gen = SubElement(mp, "analysis", ms=f"Pron_{type}_Sg_Gen")
+    wf_gen = SubElement(a_gen, "wordform")
+    wf_gen.text = "juoga"
+    a_acc = SubElement(mp, "analysis", ms=f"Pron_{type}_Sg_Acc")
+    wf_acc = SubElement(a_acc, "wordform")
+    wf_acc.text = "juoga"
+    wf_acc2 = SubElement(a_acc, "wordform")
+    wf_acc2.text = "juoiddá"
+    wf_acc3 = SubElement(a_acc, "wordform")
+    wf_acc3.text = "juoidá"
+    a_ill = SubElement(mp, "analysis", ms=f"Pron_{type}_Sg_Ill")
+    wf_ill = SubElement(a_ill, "wordform")
+    wf_ill.text = "juosat"
+    a_loc = SubElement(mp, "analysis", ms=f"Pron_{type}_Sg_Loc")
+    wf_loc = SubElement(a_loc, "wordform")
+    wf_loc.text = "juostá"
+    a_com = SubElement(mp, "analysis", ms=f"Pron_{type}_Sg_Com")
+    wf_com = SubElement(a_com, "wordform")
+    wf_com.text = "juoidáin"
+    a_ess = SubElement(mp, "analysis", ms=f"Pron_{type}_Ess")
+    wf_ess = SubElement(a_ess, "wordform")
+    wf_ess.text = "juoidán"
+    wf_ess2 = SubElement(a_ess, "wordform")
+    wf_ess2.text = "juonin"
+    a_pl = SubElement(mp, "analysis", ms=f"Pron_{type}_Pl_Nom")
+    wf_pl = SubElement(a_pl, "wordform")
+    wf_pl.text = "juoidáid"
+
 
 def check_and_insert(
     value,
@@ -108,6 +244,8 @@ def dict2xml_bytestring(d):
         if type is not None:
             l.set("type", type)
         l.text = lemma
+        if pos.startswith("Pron"):
+            insert_custom_paradigms(lg, l)
 
         for entry in entries:
             mg = SubElement(e, "mg")
