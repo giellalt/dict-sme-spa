@@ -265,7 +265,7 @@ def read_column_names(columns):
     fields = []
     for col in columns:
         if col[0].value is not None:
-            orig_field = field = col[0].value.replace(" ", "_").replace("/", "_")
+            orig_field = field = col[0].value.replace(" ", "_").replace("/", "_").replace("¿", "Q")
         else:
             orig_field = field = "Empty_field"
         n = field_counts[orig_field]
