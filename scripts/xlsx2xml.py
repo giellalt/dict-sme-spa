@@ -1,22 +1,30 @@
+#!/usr/bin/env python3
+
+# /// script
+# dependencies = [
+#     "lxml",
+#     "openpyxl",
+# ]
+# ///
+
 """
 Convert North Saami – Spanish xlsx to GT-style xml.
 """
+
 import argparse
 from itertools import islice
-from functools import partial
 from collections import defaultdict, namedtuple
 from pathlib import Path
-
-MISSING_DEP_HELP = """
-cannot run due to missing dependencies. hint, run:
-python -m venv .venv && . .venv/bin/activate && pip install -r xlsx2xml-requirements.txt
-...and then try again. (remember to run `deactivate` in the shell when you're done)
-"""
 
 try:
     from lxml.etree import Element, SubElement, tostring
     from openpyxl import load_workbook
 except ImportError:
+    MISSING_DEP_HELP = """
+    cannot run due to missing dependencies. hint, run:
+    python -m venv .venv && . .venv/bin/activate && pip install -r xlsx2xml-requirements.txt
+    ...and then try again. (remember to run `deactivate` in the shell when you're done)
+    """
     exit(MISSING_DEP_HELP)
 
 
@@ -257,7 +265,12 @@ def dict2xml_bytestring(d):
             #check_and_insert(entry.INFLECTION, lg, "lsub") # Think this is the wrong tag
             t(entry, tg, mg)
 
-    return tostring(root, encoding="utf-8", pretty_print=True)
+    doctype = (
+        '<!DOCTYPE r PUBLIC "-//DivvunGiellatekno//DTD '
+        'Dictionaries//Multilingual" "../dtd/smespa.dtd">'
+    )
+    return tostring(root, encoding="utf-8", pretty_print=True,
+                    doctype=doctype)
 
 
 def read_column_names(columns):
