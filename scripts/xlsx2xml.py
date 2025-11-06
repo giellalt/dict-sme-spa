@@ -22,7 +22,7 @@ try:
 except ImportError:
     MISSING_DEP_HELP = """
     cannot run due to missing dependencies. hint, run:
-    python -m venv .venv && . .venv/bin/activate && pip install -r xlsx2xml-requirements.txt
+    python -m venv venv && . venv/bin/activate && pip install -r xlsx2xml-requirements.txt
     ...and then try again. (remember to run `deactivate` in the shell when you're done)
     """
     exit(MISSING_DEP_HELP)

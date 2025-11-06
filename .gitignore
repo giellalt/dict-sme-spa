@@ -35,6 +35,8 @@ Makefile
 .deps/
 .dirstamp
 
+scripts/venv
+
 # https://www.gnu.org/software/libtool/
 
 /ltmain.sh
