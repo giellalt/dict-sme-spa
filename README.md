@@ -13,3 +13,7 @@ Example usage: `python3 scripts/xlsx2xml.py inc/A_V_Saami_Spanish.xlsx`. More do
 # Contributions
 
 Contributions are welcome, just clone and submit a pull request. Or use the in-place editor in GitHub to make your contributions. All contributions must be licensed under the same license as the original code.
+
+# Citing
+
+This dictionary is the work of Ángel Díaz de Rada at UNED and Kjell Kemi at UiT.
